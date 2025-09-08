@@ -76,6 +76,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/attendance/{id}/correction', [AdminAttendanceController::class, 'requestCorrection'])->name('admin.attendance.requestCorrection');
 
     // 他にも必要ならここに追加可能
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/admin/staff/list', [UserController::class, 'index'])->name('admin.staff.index');
     Route::get('/admin/requests', [AdminRequestController::class, 'index'])->name('requests.index');
+    Route::get('/admin/attendance/staff/{id}', [AdminAttendanceController::class, 'staff'])->name('admin.attendance.staff');
+    Route::get('/admin/users/{user}/attendances/export', [AttendanceController::class, 'export'])->name('admin.attendance.export');
+    Route::get('/admin/requests/{id}', [AdminRequestController::class, 'show'])->name('requests.show');
+    Route::post('/admin/requests/{id}', [AdminRequestController::class, 'approve'])->name('requests.approve');
+
 });

@@ -15,8 +15,8 @@ class AttendanceCorrectionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'clock_in' => 'nullable|date_format:H:i',
-            'clock_out' => 'nullable|date_format:H:i',
+            'clock_in' => 'required|date_format:H:i',
+            'clock_out' => 'required|date_format:H:i|after:clock_in',
             'note' => 'required|string|max:255',
         ];
     }
@@ -24,6 +24,9 @@ class AttendanceCorrectionRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'clock_in.required' => '出勤時間を入力してください',
+            'clock_out.required' => '退勤時間を入力してください',
+            'clock_out.after' => '退勤時間は出勤時間より後にしてください',
             'note.required' => '備考を記入してください',
         ];
     }

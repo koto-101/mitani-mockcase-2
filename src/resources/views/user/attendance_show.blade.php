@@ -42,19 +42,28 @@
                 </td>
             </tr>
 
-            <tr>
-                <th>休憩</th>
-                <td>
-                    @foreach ($attendance->breakLogs as $i => $break)
-                        <div class="break-log-row">
-                            <label>休憩{{ $i + 1 }}</label>
-                            <input type="time" name="breaks[{{ $i }}][start]" value="{{ old("breaks.$i.start", optional($break->start_time)->format('H:i')) }}">
-                            〜
-                            <input type="time" name="breaks[{{ $i }}][end]" value="{{ old("breaks.$i.end", optional($break->end_time)->format('H:i')) }}">
-                        </div>
-                    @endforeach
-                </td>
-            </tr>
+            @php
+                $breakLogs = $attendance->breakLogs;
+                $breakCount = $breakLogs->count();
+                $showCount = max(2, $breakCount); // 必ず2行以上表示（1件しかなくても空行追加）
+            @endphp
+
+            @for ($i = 0; $i < $showCount; $i++)
+                <tr>
+                    <th>
+                        @if ($i === 0)
+                            休憩
+                        @else
+                            休憩{{ $i + 1 }}
+                        @endif
+                    </th>
+                    <td>
+                        <input type="time" name="breaks[{{ $i }}][start]" value="{{ old("breaks.$i.start", optional($breakLogs[$i]->start_time ?? null)->format('H:i')) }}">
+                        〜
+                        <input type="time" name="breaks[{{ $i }}][end]" value="{{ old("breaks.$i.end", optional($breakLogs[$i]->end_time ?? null)->format('H:i')) }}">
+                    </td>
+                </tr>
+            @endfor
 
             <tr>
                 <th>備考</th>
@@ -67,7 +76,7 @@
         @if ($hasPendingRequest)
             <p class="alert alert-warning">*承認待ちのため修正はできません。</p>
         @else
-            <button type="submit" class="correction-button">修正申請</button>
+            <button type="submit" class="correction-button">修正</button>
         @endif
     </form>
 </div>

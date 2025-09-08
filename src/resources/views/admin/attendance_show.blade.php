@@ -43,9 +43,11 @@
             <tr>
                 <th>出勤・退勤</th>
                 <td>
-                    <input type="time" name="clock_in" value="{{ old('clock_in', optional($attendance->clock_in)->format('H:i')) }}">
-                    ～ 
-                    <input type="time" name="clock_out" value="{{ old('clock_out', optional($attendance->clock_out)->format('H:i')) }}">
+                    <input type="time" name="clock_in"
+                        value="{{ old('clock_in', $correctionRequest && $correctionRequest->clock_in ? \Carbon\Carbon::parse($correctionRequest->clock_in)->format('H:i') : optional($attendance->clock_in)->format('H:i')) }}">
+
+                    <input type="time" name="clock_out"
+                        value="{{ old('clock_out', $correctionRequest && $correctionRequest->clock_out ? \Carbon\Carbon::parse($correctionRequest->clock_out)->format('H:i') : optional($attendance->clock_out)->format('H:i')) }}">
                 </td>
             </tr>
 
@@ -55,9 +57,11 @@
                     @foreach ($attendance->breakLogs as $i => $break)
                         <div style="margin-bottom: 5px;">
                             <label>休憩{{ $i + 1 }}</label>
-                            <input type="time" name="breaks[{{ $i }}][start]" value="{{ old("breaks.$i.start", optional($break->start_time)->format('H:i')) }}">
+                            <input type="time" name="breaks[{{ $i }}][start]"
+                                value="{{ old('breaks.'.$i.'.start', $break->start_time ? \Carbon\Carbon::parse($break->start_time)->format('H:i') : '') }}">
                             〜
-                            <input type="time" name="breaks[{{ $i }}][end]" value="{{ old("breaks.$i.end", optional($break->end_time)->format('H:i')) }}">
+                            <input type="time" name="breaks[{{ $i }}][end]"
+                                value="{{ old('breaks.'.$i.'.end', $break->end_time ? \Carbon\Carbon::parse($break->end_time)->format('H:i') : '') }}">
                         </div>
                     @endforeach
                 </td>
@@ -66,7 +70,7 @@
             <tr>
                 <th>備考</th>
                 <td>
-                    <textarea name="reason" rows="3" style="width: 100%;" >{{ old('reason') }}</textarea>
+                    <textarea name="reason" rows="3" style="width: 100%;">{{ old('reason', $correctionRequest->note ?? '') }}</textarea>
                 </td>
             </tr>
         </table>

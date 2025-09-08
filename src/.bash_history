@@ -54,3 +54,7 @@ php artisan view:clear
 exit
 php artisan tinker
 exit
+php artisan route:list | grep attendances
+exit
+php artisan tinker
+exit

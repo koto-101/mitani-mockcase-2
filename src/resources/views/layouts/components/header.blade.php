@@ -21,8 +21,8 @@
                         <li><a href="/admin/requests">申請一覧</a></li>
                     @else
                         {{-- パターン4: 管理者 - ダッシュボードなど --}}
-                        <li><a href="/admin/attendances">勤怠一覧</a></li>
-                        <li><a href="/admin/users">スタッフ一覧</a></li>
+                        <li><a href="/admin/attendances/list">勤怠一覧</a></li>
+                        <li><a href="/admin/staff/list">スタッフ一覧</a></li>
                         <li><a href="/admin/requests">申請一覧</a></li>
                     @endif
                     <li>

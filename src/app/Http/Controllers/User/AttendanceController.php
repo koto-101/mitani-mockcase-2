@@ -160,7 +160,7 @@ class AttendanceController extends Controller
                 'user_id'       => auth()->id(),
                 'attendance_id' => $attendance->id,
                 'status'        => 'pending',
-                'reason'        => '修正申請',
+                'reason' => $request->input('note'),
                 'clock_in'      => $request->input('clock_in'),
                 'clock_out'     => $request->input('clock_out'),
                 'requested_at'  => now(),

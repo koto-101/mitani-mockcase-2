@@ -27,7 +27,7 @@
     <div class="month-navigation">
         <a href="{{ route('attendance.list', ['month' => $prevMonth->format('Y-m')]) }}">←前月</a>
         <span class="current-month">
-            📅 {{ $currentMonth->format('Y年n月') }}
+            📅 {{ $currentMonth->format('Y/m') }}
         </span>
         <a href="{{ route('attendance.list', ['month' => $nextMonth->format('Y-m')]) }}">翌月→</a>
     </div>
