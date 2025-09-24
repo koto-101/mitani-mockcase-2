@@ -180,33 +180,33 @@ password: admin1234
 
 ## テストについて
 1. テスト用データベースの作成
+```bash
 docker-compose exec mysql bash
 mysql -u root -p
-//パスワードは「root」と入力
-create database test_database;
-
-2. .env.testing の作成
+# パスワードは「root」と入力
+create database demo_test;
+```
+2. ユーザー権限を付与
+次に、laravel_user ユーザーに対してdemo_test への権限を付与します：
+```bash
+GRANT ALL PRIVILEGES ON demo_test.* TO 'laravel_user'@'%';
+FLUSH PRIVILEGES;
+```
+3. .env.testing の作成
 ```bash
 cp .env .env.testing
 ```
-3. .env.testing に以下のDB、メール設定を記述
+4. .env.testing に以下のDB、メール設定を記述
 #### データベース設定
 ``` text
 DB_CONNECTION=mysql
 DB_HOST=mysql
 DB_PORT=3306
-DB_DATABASE=test_database
+DB_DATABASE=demo_test
 DB_USERNAME=laravel_user
 DB_PASSWORD=laravel_pass
 
 ```
-#### メール設定
-``` text
-MAIL_FROM_ADDRESS=no-reply@example.com
-
-```
-
-
 4. テスト用マイグレーションを実行
 ```bash
 docker-compose exec php bash
