@@ -37,4 +37,9 @@ class StampCorrectionRequest extends Model
     {
         return $this->hasMany(CorrectionBreakLog::class);
     }
+
+    public function getNoteAttribute()
+    {
+        return $this->reason;
+    }
 }

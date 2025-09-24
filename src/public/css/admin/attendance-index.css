@@ -1,0 +1,164 @@
+body {
+background-color: #eee;
+font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+color: #333;
+margin: 0 ;
+}
+
+.container {
+max-width: 1200px;
+margin: 60 auto;
+padding: 50px 200px;
+box-sizing: border-box;
+}
+
+/* ----------------------------------
+メインタイトル
+---------------------------------- */
+.main-title-container {
+display: flex;
+align-items: center;
+margin-bottom: 40px;
+}
+
+.main-title-container h1 {
+font-size: 24px;
+font-weight: 700;
+color: #000;
+margin: 0;
+padding-left: 20px;
+position: relative;
+border-left: 7px solid #000;
+}
+
+/* ----------------------------------
+日付ナビゲーション
+---------------------------------- */
+.date-navigation {
+display: flex;
+justify-content: space-between; /* 左右端に寄せる */
+align-items: center;
+background-color: #fff;
+font-size: 16px;
+padding:10px 20px;
+border-radius: 8px;
+margin-bottom: 30px;
+}
+
+.date-navigation a {
+color: #5c5c5c;
+text-decoration: none;
+font-weight: 600;
+}
+
+.date-navigation a:hover {
+text-decoration: underline;
+}
+
+.date-navigation strong {
+font-size: 20px;
+}
+
+/* ----------------------------------
+勤怠テーブル
+---------------------------------- */
+table {
+width: 100%;
+border-collapse: collapse;
+background-color: #fff;
+border-radius: 8px;
+overflow: hidden;
+
+}
+
+table th,
+table td {
+padding: 15px;
+text-align: center;
+border-bottom: 1px solid #eee;
+}
+
+table th {
+background-color: #fff;
+color: #5c5c5c;
+font-weight: 600;
+border-bottom: 2px solid #eee;
+}
+
+table tr:last-child td {
+border-bottom: none;
+}
+
+table td a {
+color: #000;
+text-decoration: none;
+font-weight: 600;
+}
+
+table td a:hover {
+text-decoration: underline;
+}
+
+/* ----------------------------------
+レスポンシブデザイン
+---------------------------------- /
+/ PC (1400-1540px) */
+@media (min-width: 1400px) and (max-width: 1540px) {
+.container {
+max-width: 1400px;
+}
+}
+
+/* タブレット (768-850px) */
+@media (min-width: 768px) and (max-width: 850px) {
+.container {
+padding: 15px;
+}
+
+.main-title-container h1 {
+    font-size: 24px;
+}
+
+.date-navigation {
+    gap: 20px;
+    font-size: 14px;
+}
+
+table th,
+table td {
+    padding: 12px;
+    font-size: 14px;
+}
+
+}
+
+/* スマートフォン (767px以下) */
+@media (max-width: 767px) {
+.container {
+padding: 10px 50px;
+}
+
+.main-title-container h1 {
+    font-size: 20px;
+    padding-left: 15px;
+}
+
+.date-navigation {
+    gap: 15px;
+    align-items: center;
+}
+
+.date-navigation strong {
+    font-size: 16px;
+}
+
+table {
+    font-size: 12px;
+}
+
+table th,
+table td {
+    padding: 8px;
+}
+
+}

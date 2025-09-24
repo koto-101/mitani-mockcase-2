@@ -13,7 +13,7 @@ class RequestController extends Controller
     {
         $status = $request->query('status', 'pending'); // デフォルトは承認待ち
 
-        $requests = StampCorrectionRequest::with('user')
+        $requests = StampCorrectionRequest::with(['user', 'attendance'])
             ->when($status === 'pending', fn ($q) => $q->where('status', 'pending'))
             ->when($status === 'approved', fn ($q) => $q->where('status', 'approved'))
             ->orderByDesc('created_at')
@@ -54,6 +54,7 @@ class RequestController extends Controller
         return view('admin.request_approval', compact('request'));
     }
 
+
     public function approve(Request $request, $id)
     {
         $correctionRequest = StampCorrectionRequest::with('attendance')->findOrFail($id);
@@ -66,18 +67,22 @@ class RequestController extends Controller
         $attendance->breakLogs()->delete(); 
 
         foreach ($correctionRequest->correctionBreakLogs as $correctionBreak) {
-            $attendance->breakLogs()->create([
-                'start_time' => $correctionBreak->start_time,
-                'end_time' => $correctionBreak->end_time,
-            ]);
+            if ($correctionBreak->start_time && $correctionBreak->end_time) {
+                $attendance->breakLogs()->create([
+                    'start_time' => $correctionBreak->start_time,
+                    'end_time' => $correctionBreak->end_time,
+                ]);
+            }
         }
+
 
         // 申請ステータスを更新
         $correctionRequest->status = 'approved';
         $correctionRequest->approved_at = now();
         $correctionRequest->save();
 
-        return redirect()->route('requests.index')->with('success', '修正申請を承認しました。');
+        return redirect()->route('requests.show', ['id' => $correctionRequest->id])
+            ->with('success', '修正申請を承認しました。');
     }
 
 

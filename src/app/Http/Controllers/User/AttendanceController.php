@@ -27,6 +27,10 @@ class AttendanceController extends Controller
         // ステータスが null の場合は off（勤務外）
         $status = $attendance->status ?? 'off';
 
+        if (in_array($status, ['clock_out'])) {
+            $status = 'done';
+        }
+
         // ステータス表示用ラベル
         $statusLabel = match ($status) {
             'clock_in' => '出勤中',
@@ -118,7 +122,6 @@ class AttendanceController extends Controller
         ]);
     }
 
-    // 日別詳細画面
     public function detail($id)
     {
         $attendance = Attendance::with('breakLogs')->findOrFail($id);
@@ -128,14 +131,34 @@ class AttendanceController extends Controller
             abort(403);
         }
 
-        $hasPendingRequest = \App\Models\StampCorrectionRequest::where('attendance_id', $attendance->id)
-        ->where('user_id', auth()->id())
-        ->where('status', 'pending')
-        ->exists();
+        $correctionRequest = StampCorrectionRequest::with('correctionBreakLogs')
+            ->where('attendance_id', $attendance->id)
+            ->where('user_id', auth()->id())
+            ->where('status', 'pending')
+            ->latest()
+            ->first();
+
+        $hasPendingRequest = !is_null($correctionRequest);
+
+        if ($correctionRequest) {
+            if ($correctionRequest->clock_in) {
+                $attendance->clock_in = $correctionRequest->clock_in;
+            }
+
+            if ($correctionRequest->clock_out) {
+                $attendance->clock_out = $correctionRequest->clock_out;
+            }
+
+            // 休憩時間も置き換える（必要な場合）
+            $breakLogs = $correctionRequest->correctionBreakLogs;
+        } else {
+            $breakLogs = $attendance->breakLogs;
+        }
 
         return view('user.attendance_show', [
             'attendance' => $attendance,
             'hasPendingRequest' => $hasPendingRequest, 
+            'breakLogs' => $breakLogs,
         ]);
     }
 
@@ -149,6 +172,7 @@ class AttendanceController extends Controller
 
         $existing = StampCorrectionRequest::where('attendance_id', $attendance->id)
             ->where('user_id', auth()->id())
+            ->where('status', 'pending')
             ->first();
 
         if ($existing) {
@@ -160,17 +184,26 @@ class AttendanceController extends Controller
                 'user_id'       => auth()->id(),
                 'attendance_id' => $attendance->id,
                 'status'        => 'pending',
-                'reason' => $request->input('note'),
+                'reason' => $request->input('reason'),
                 'clock_in'      => $request->input('clock_in'),
                 'clock_out'     => $request->input('clock_out'),
                 'requested_at'  => now(),
             ]);
 
+
             foreach ($request->input('breaks', []) as $break) {
+                if (empty($break['start']) && empty($break['end'])) {
+                    continue;
+                }
+
+                // どちらかが入っていれば null を代入（Carbon::parseに渡さないように）
+                $start = $break['start'] ?? null;
+                $end = $break['end'] ?? null;
+
                 CorrectionBreakLog::create([
                     'stamp_correction_request_id' => $correction->id,
-                    'start_time' => $break['start'] ?? null,
-                    'end_time'   => $break['end'] ?? null,
+                    'start_time' => $start,
+                    'end_time'   => $end,
                 ]);
             }
         });

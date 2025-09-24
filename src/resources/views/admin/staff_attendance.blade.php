@@ -3,10 +3,24 @@
 @section('title', $user->name . 'さんの勤怠')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/admin.attendance.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin/staff-attendance.css') }}">
 @endsection
 
 @section('content')
+@php
+    if (!function_exists('minutesToTime')) {
+        function minutesToTime($minutes) {
+            return floor($minutes / 60) . ':' . str_pad($minutes % 60, 2, '0', STR_PAD_LEFT);
+        }
+    }
+
+    $weekDays = ['日', '月', '火', '水', '木', '金', '土'];
+    $daysInMonth = $currentMonth->daysInMonth;
+    $attendanceMap = $attendanceList->mapWithKeys(function ($item) {
+        return [$item['date'] => $item['attendance']];
+    });
+@endphp
+
 <div class="container">
     <h1>{{ $user->name }} さんの勤怠</h1>
 
@@ -30,22 +44,54 @@
             </tr>
         </thead>
         <tbody>
-            @forelse ($attendances as $attendance)
+            @for ($day = 1; $day <= $daysInMonth; $day++)
+                @php
+                    $date = $currentMonth->copy()->day($day);
+                    $dateStr = $date->format('Y-m-d');
+                    $formatted = $date->format('m/d');
+                    $weekday = $weekDays[$date->dayOfWeek];
+                    $attendance = $attendanceMap[$dateStr] ?? null;
+
+                    $breakMinutes = 0;
+
+                    if ($attendance && $attendance->breakLogs && $attendance->breakLogs->isNotEmpty()) {
+                        foreach ($attendance->breakLogs as $break) {
+                            if ($break->start_time && $break->end_time) {
+                                $start = \Carbon\Carbon::parse($break->start_time);
+                                $end = \Carbon\Carbon::parse($break->end_time);
+                                $breakMinutes += $end->diffInMinutes($start);
+                            }
+                        }
+                    }
+
+                    $totalMinutes = null;
+                    if ($attendance && $attendance->clock_in && $attendance->clock_out) {
+                        $workMinutes = \Carbon\Carbon::parse($attendance->clock_out)->diffInMinutes(\Carbon\Carbon::parse($attendance->clock_in));
+                        $totalMinutes = $workMinutes - $breakMinutes;
+                    }
+                @endphp
+
                 <tr>
-                    <td>{{ \Carbon\Carbon::parse($attendance->date)->format('Y/m/d') }}</td>
-                    <td>{{ $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '-' }}</td>
-                    <td>{{ $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '-' }}</td>
-                    <td>{{ gmdate('H:i', $attendance->total_break_time ?? 0) }}</td>
-                    <td>{{ gmdate('H:i', $attendance->working_time ?? 0) }}</td>
+                    <td>{{ $formatted }}（{{ $weekday }}）</td>
+                    <td>{{ $attendance?->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '' }}</td>
+                    <td>{{ $attendance?->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '' }}</td>
                     <td>
-                        <a href="{{ route('admin.attendance.show', ['id' => $attendance->id]) }}">詳細</a>
+                        @if ($attendance && $attendance->clock_in && $attendance->clock_out)
+                            {{ minutesToTime($breakMinutes) }}
+                        @endif
+                    </td>
+                    <td>
+                        @if (!is_null($totalMinutes))
+                            {{ minutesToTime($totalMinutes) }}
+                        @endif
+                    </td>
+                    <td>
+                        @if ($attendance)
+                            <a href="{{ route('admin.attendance.show', ['id' => $attendance->id]) }}">詳細</a>
+                        @endif
                     </td>
                 </tr>
-            @empty
-                <tr>
-                    <td colspan="6">この月の勤怠データはありません。</td>
-                </tr>
-            @endforelse
+            @endfor
         </tbody>
     </table>
 

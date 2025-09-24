@@ -2,3 +2,4 @@ exit
 echo Carbon\Carbon::now();
 Hash::make('admin1234')
 \App\Models\CorrectionBreakLog::whereNull('start_time')->get();
+App\Models\User::first()->email_verified_at;

@@ -2,16 +2,20 @@
 
 @section('title', '管理者ログイン')
 
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/admin/login.css') }}">
+@endsection
+
 @section('content')
 <div class="login-container">
     <h1>管理者ログイン</h1>
 
     <form method="POST" action="{{ route('admin.login.submit') }}">
         @csrf
-
+        
         <div>
             <label for="email">メールアドレス</label>
-            <input type="text" name="email" >
+            <input type="text" name="email" autofocus>
             <div class="form__error">
                 @error('email')
                     {{ $message }}

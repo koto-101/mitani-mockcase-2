@@ -3,7 +3,7 @@
 @section('title', '会員登録')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/register.css') }}"> {{-- 任意 --}}
+    <link rel="stylesheet" href="{{ asset('css/user/register.css') }}"> {{-- 任意 --}}
 @endsection
 
 @section('content')

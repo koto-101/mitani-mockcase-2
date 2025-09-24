@@ -1,0 +1,181 @@
+body {
+  background-color: #eee; /* 全体の背景色をグレーに設定 */
+  color: #787979;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+}
+
+.attendance-list-container {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 40px;
+}
+
+.attendance-list-container h1 {
+  font-size: 24px;
+  margin-bottom: 30px;
+  color: #000;
+  font-weight: bold;
+  border-left: 7px solid #000;
+  padding-left: 12px; 
+}
+
+.month-navigation {
+  display: flex;
+  justify-content: space-between; 
+  padding: 5px 20px;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #fff;
+  border-radius: 4px; 
+}
+
+.month-navigation a {
+  color: #636363;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.month-navigation a:hover {
+  text-decoration: underline;
+}
+
+.current-month {
+  color: #000;
+}
+
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.attendance-table th, .attendance-table td {
+  padding: 12px;
+  border: 2.5px solid #eee;
+  border-left: none;
+  border-right: none;
+}
+
+.attendance-table thead tr {
+  background-color: #fff;
+}
+
+.attendance-table tbody tr{
+  background-color: #fff;
+}
+/* 
+.attendance-table tbody tr:hover {
+  background-color: #f1f1f1;
+} */
+
+.attendance-table a {
+  color: #000;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.attendance-table a:hover {
+  text-decoration: underline;
+}
+
+
+/* ================================
+  PC（1400px〜1540px）
+================================ */
+@media (min-width: 1400px) and (max-width: 1540px) {
+  .attendance-list-container {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 40px;
+  }
+
+  .attendance-list-container h1 {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+
+  .month-navigation {
+    gap: 30px;
+    margin-bottom: 20px;
+    font-size: 18px;
+  }
+
+  .month-navigation a {
+    font-size: 14px;
+  }
+
+  .attendance-table th,
+  .attendance-table td {
+    padding: 12px;
+  }
+}
+
+/* ================================
+  タブレット（768px〜1399px）
+================================ */
+@media (min-width: 768px) and (max-width: 1399px) {
+  .attendance-list-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+  }
+
+  .attendance-list-container h1 {
+    font-size: 22px;
+    margin-bottom: 25px;
+  }
+
+  .month-navigation {
+    gap: 25px;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+
+  .month-navigation a {
+    font-size: 13px;
+  }
+
+  .attendance-table th,
+  .attendance-table td {
+    padding: 10px;
+  }
+}
+
+/* ================================
+  スマートフォン（〜767px）
+================================ */
+@media (max-width: 767px) {
+  .attendance-list-container {
+    margin: 20px 10px;
+    padding: 15px;
+  }
+
+  .attendance-list-container h1 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .month-navigation {
+    gap: 20px;
+    font-size: 14px;
+  }
+
+  .month-navigation a {
+    font-size: 12px;
+  }
+
+  .attendance-table {
+    font-size: 12px;
+  }
+
+  .attendance-table th,
+  .attendance-table td {
+    padding: 8px;
+  }
+}

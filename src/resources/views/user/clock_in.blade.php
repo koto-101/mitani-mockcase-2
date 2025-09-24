@@ -3,7 +3,7 @@
 @section('title', '勤怠登録')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/attendance.css') }}">
+<link rel="stylesheet" href="{{ asset('css/user/clock-in.css') }}">
 @endsection
 
 @section('content')
@@ -15,10 +15,10 @@
 @endphp
 
 <div class="attendance-container">
-    {{-- <h1>勤怠登録</h1> --}}
     <p class="status">{{ $statusLabel }}</p>
     
-    <p>{{ $date->format("Y年n月j日") }}（{{ $dayOfWeek }}）{{ $date->format("H:i") }}</p>
+    <p class="date">{{ $date->format("Y年n月j日") }}（{{ $dayOfWeek }}）</p>
+    <p class="time">{{ $date->format("H:i") }}</p>
 
     <form method="POST" action="{{ route('attendance') }}">
         @csrf
@@ -27,10 +27,10 @@
             <button type="submit" name="action" value="clock_in">出勤</button>
         @elseif ($status === 'clock_in')
             <button type="submit" name="action" value="clock_out">退勤</button>
-            <button type="submit" name="action" value="break_in">休憩入</button>
+            <button type="submit" name="action" value="break_in" class="white-button">休憩入</button>
         @elseif ($status === 'break_in')
             <button type="submit" name="action" value="break_out">休憩戻</button>
-        @else
+        @elseif ($status === 'done')
             <p>お疲れ様でした。</p>
         @endif
 

@@ -3,7 +3,7 @@
 @section('title', '勤怠詳細')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/admin.request.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin/request-approval.css') }}">
 @endsection
 
 @section('content')
@@ -18,37 +18,62 @@
             </tr>
             <tr>
                 <th>日付</th>
-                <td>{{ \Carbon\Carbon::parse($request->attendance->date)->format('Y/m/d') }}</td>
-            </tr>
-            <tr>
-                <th>出勤</th>
-                <td>{{ $request->clock_in ? \Carbon\Carbon::parse($request->clock_in)->format('H:i') : '-' }}</td>
-            </tr>
-            <tr>
-                <th>退勤</th>
-                <td>{{ $request->clock_out ? \Carbon\Carbon::parse($request->clock_out)->format('H:i') : '-' }}</td>
-            </tr>
-            <tr>
-                <th>休憩</th>
-                <td>{{ gmdate('H:i', $request->requested_break_time ?? 0) }}</td>
-            </tr>
-            <tr>
-                <th>休憩2</th>
                 <td>
-                    {{ $request->requested_break_time2 !== null ? gmdate('H:i', $request->requested_break_time2) : '' }}
+                    <span class="date-year">{{ \Carbon\Carbon::parse($request->attendance->date)->format('Y年') }}</span>
+                    <span class="date-space">&nbsp;&nbsp;</span>
+                    <span class="date-month-day">{{ \Carbon\Carbon::parse($request->attendance->date)->format('n月j日') }}</span>
                 </td>
             </tr>
+
+                <th>出勤・退勤</th>
+                    <td>
+                    {{ $request->clock_in ? \Carbon\Carbon::parse($request->clock_in)->format('H:i') : '-' }}
+                    ～
+                    {{ $request->clock_out ? \Carbon\Carbon::parse($request->clock_out)->format('H:i') : '-' }}
+                    </td>
+                </tr>
+
+            {{-- 実際の休憩ログ表示 --}}
+            @php
+                $breakLogs = $request->correctionBreakLogs->isNotEmpty()
+                    ? $request->correctionBreakLogs
+                    : $request->attendance->breakLogs;
+
+                $breakCount = $breakLogs->count(); 
+            @endphp
+
+            @foreach ($breakLogs as $index => $break)
+                <tr>
+                    <th>
+                        {{ $index === 0 ? '休憩' : '休憩' . ($index + 1) }}
+                    </th>
+                    <td>
+                        {{ \Carbon\Carbon::parse($break->start_time)->format('H:i') }}
+                        〜
+                        {{ \Carbon\Carbon::parse($break->end_time)->format('H:i') }}
+                    </td>
+                </tr>
+            @endforeach
+
             <tr>
-                <th>備考（申請理由）</th>
+                <th>休憩{{ $breakCount + 1 }}</th>
+                <td>　{{-- 空欄 --}}</td>
+            </tr>
+
+                <th>備考</th>
                 <td>{{ $request->reason }}</td>
             </tr>
         </tbody>
     </table>
 
     {{-- 承認ボタン --}}
-    <form action="{{ route('requests.approve', ['id' => $request->id]) }}" method="POST" style="margin-top: 20px;">
+@if ($request->status !== 'approved')
+    <form action="{{ route('requests.approve', ['id' => $request->id]) }}" method="POST" >
         @csrf
         <button type="submit" class="btn btn-primary">承認</button>
     </form>
+@else
+    <p class="approved-label" >承認済み</p>
+@endif
 </div>
 @endsection

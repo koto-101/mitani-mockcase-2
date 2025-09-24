@@ -3,7 +3,7 @@
 @section('title', '申請一覧')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/request_list.css') }}">
+<link rel="stylesheet" href="{{ asset('css/user/request-index.css') }}">
 @endsection
 
 @section('content')
@@ -45,7 +45,7 @@
                         @endif
                     </td>
                     <td>{{ $request->user->name }}</td>
-                    <td>{{ \Carbon\Carbon::parse($request->target_date)->format('Y/m/d') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($request->attendance->date)->format('Y/m/d') }}</td>
                     <td>{{ $request->reason }}</td>
                     <td>{{ $request->created_at->format('Y/m/d') }}</td>
                     <td>

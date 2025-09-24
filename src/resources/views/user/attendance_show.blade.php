@@ -3,7 +3,7 @@
 @section('title', '勤怠詳細')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/attendance.css') }}">
+<link rel="stylesheet" href="{{ asset('css/user/attendance-show.css') }}">
 @endsection
 
 @section('content')
@@ -29,7 +29,11 @@
             </tr>
             <tr>
                 <th>日付</th>
-                <td>{{ \Carbon\Carbon::parse($attendance->date)->format('Y年n月j日') }}</td>
+                <td>
+                    <span class="date-year">{{ \Carbon\Carbon::parse($attendance->date)->format('Y年') }}</span>
+                    <span class="date-space">&nbsp;&nbsp;</span>
+                    <span class="date-month-day">{{ \Carbon\Carbon::parse($attendance->date)->format('n月j日') }}</span>
+                </td>
             </tr>
 
             <tr>
@@ -42,25 +46,33 @@
                 </td>
             </tr>
 
+
             @php
-                $breakLogs = $attendance->breakLogs;
-                $breakCount = $breakLogs->count();
-                $showCount = max(2, $breakCount); // 必ず2行以上表示（1件しかなくても空行追加）
+                $oldBreaks = collect(old('breaks', []))
+                    ->filter(fn($b) => !empty($b['start']) || !empty($b['end']));
+
+                if ($oldBreaks->isNotEmpty()) {
+                    $showCount = $oldBreaks->count()+1;
+                } else {
+                    $showCount = $breakLogs->count() + 1; 
+                }
             @endphp
 
             @for ($i = 0; $i < $showCount; $i++)
+                @php
+                    $break = $breakLogs[$i] ?? null; 
+                    $startTime = $break && $break->start_time ? \Carbon\Carbon::parse($break->start_time)->format('H:i') : '';
+                    $endTime = $break && $break->end_time ? \Carbon\Carbon::parse($break->end_time)->format('H:i') : '';
+                @endphp
+
                 <tr>
                     <th>
-                        @if ($i === 0)
-                            休憩
-                        @else
-                            休憩{{ $i + 1 }}
-                        @endif
+                        {{ $i === 0 ? '休憩' : '休憩' . ($i + 1) }}
                     </th>
                     <td>
-                        <input type="time" name="breaks[{{ $i }}][start]" value="{{ old("breaks.$i.start", optional($breakLogs[$i]->start_time ?? null)->format('H:i')) }}">
+                        <input type="time" name="breaks[{{ $i }}][start]" value="{{ old("breaks.$i.start", $startTime) }}">
                         〜
-                        <input type="time" name="breaks[{{ $i }}][end]" value="{{ old("breaks.$i.end", optional($breakLogs[$i]->end_time ?? null)->format('H:i')) }}">
+                        <input type="time" name="breaks[{{ $i }}][end]" value="{{ old("breaks.$i.end", $endTime) }}">
                     </td>
                 </tr>
             @endfor

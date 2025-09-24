@@ -1,0 +1,128 @@
+/* === 全体設定 === */
+body {
+  background-color: #eee;
+  font-family: Arial, sans-serif;
+  color: #333;
+  margin: 0;
+}
+
+/* === コンテナ設定 === */
+.container {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 40px;
+  background-color: #eee;
+}
+
+/* === タイトル === */
+.container h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  padding-left: 12px;
+  border-left: 7px solid #000;
+}
+
+/* === タブナビゲーション === */
+.tabs {
+  display: flex;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #717171;
+  gap: 10px;
+}
+
+.tabs a {
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #717171;
+  font-weight: bold;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.tabs a.active {
+  color: #000;
+}
+
+
+/* === 申請一覧テーブル === */
+table {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+table th,
+table td {
+  padding: 14px 16px;
+  text-align: center;
+  font-size: 15px;
+  color: #6e6e6e;
+  border-bottom: 1px solid #eee;
+}
+
+table th {
+  border-bottom: 2px solid #eee;
+}
+
+table tr:last-child td {
+  border-bottom: none;
+}
+
+table td a {
+  color: #000;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+table td a:hover {
+  text-decoration: underline;
+}
+
+/* === レスポンシブ対応 === */
+
+/* タブレット (～1399px) */
+@media (max-width: 1399px) {
+  .request-list-container {
+    max-width: 800px;
+    padding: 30px;
+  }
+
+  table th,
+  table td {
+    font-size: 14px;
+    padding: 12px;
+  }
+}
+
+/* スマートフォン (～767px) */
+@media (max-width: 767px) {
+  .request-list-container {
+    margin: 20px 10px;
+    padding: 20px;
+  }
+
+  .request-list-container h1 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .tabs a {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  table {
+    font-size: 12px;
+  }
+
+  table th,
+  table td {
+    padding: 8px;
+    text-align: center;
+  }
+
+}

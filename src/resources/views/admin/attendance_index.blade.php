@@ -3,12 +3,14 @@
 @section('title', '勤怠一覧（管理者）')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/admin.attendance.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin/attendance-index.css') }}">
 @endsection
 
 @section('content')
 <div class="container">
-    <h1>勤怠一覧</h1>
+    <div class="main-title-container">
+    <h1>{{ $currentDate->format('Y年n月j日') }}の勤怠</h1>
+    </div>
 
     {{-- 日付と前日・翌日リンク --}}
     <div class="date-navigation">

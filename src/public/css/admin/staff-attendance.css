@@ -1,0 +1,174 @@
+/* === 全体設定 === */
+body {
+  background-color: #eee;
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  color: #333;
+  margin: 0;
+}
+
+/* === コンテナ設定 === */
+.container {
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 50px 200px;
+  box-sizing: border-box;
+  background-color: #eee;
+}
+
+/* === タイトル（h1） === */
+.container h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 40px;
+  padding-left: 20px;
+  border-left: 7px solid #000;
+}
+
+/* === 月ナビゲーション === */
+.month-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  font-size: 16px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.month-navigation a {
+  color: #707070;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.month-navigation a:hover {
+  text-decoration: underline;
+}
+
+.month-navigation strong {
+  font-size: 20px;
+  color: #000;
+}
+
+/* === 勤怠テーブル === */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 40px;
+  color: #707070;
+}
+
+table th,
+table td {
+  padding: 16px 20px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  font-size: 15px;
+}
+
+table th {
+  background-color: #fff;
+  color: #707070;
+  font-weight: 600;
+  border-bottom: 2px solid #eee;
+}
+
+table tr:last-child td {
+  border-bottom: none;
+}
+
+table td a {
+  color: #000;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+table td a:hover {
+  text-decoration: underline;
+}
+
+/* === CSV出力ボタン === */
+.csv-export {
+  text-align: right;
+}
+
+.csv-export button {
+  background-color: #000;
+  color: #fff;
+  padding: 12px 25px;
+  font-size: 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.csv-export button:hover {
+  background-color: #333;
+}
+
+/* === レスポンシブ対応 === */
+
+/* 中サイズデバイス（タブレットなど） */
+@media (max-width: 1024px) {
+  .container {
+    padding: 30px;
+  }
+
+  table th,
+  table td {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .month-navigation {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+
+  .month-navigation strong {
+    font-size: 18px;
+  }
+}
+
+/* スマートフォン */
+@media (max-width: 767px) {
+  .container {
+    padding: 20px;
+  }
+
+  .container h1 {
+    font-size: 22px;
+    padding-left: 15px;
+  }
+
+  .month-navigation {
+    display: flex;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .month-navigation strong {
+    font-size: 16px;
+  }
+
+  table {
+    font-size: 13px;
+  }
+
+  table th,
+  table td {
+    padding: 10px;
+  }
+
+  .csv-export {
+    margin-top: 20px;
+  }
+
+}

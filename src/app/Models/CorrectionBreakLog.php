@@ -14,14 +14,13 @@ class CorrectionBreakLog extends Model
         'start_time',
         'end_time',
     ];
+        protected $casts = [
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
+    ];
 
     public function correctionRequest()
     {
         return $this->belongsTo(StampCorrectionRequest::class, 'stamp_correction_request_id');
-    }
-
-    public function correctionBreakLogs()
-    {
-        return $this->hasMany(CorrectionBreakLog::class, 'stamp_correction_request_id');
     }
 }

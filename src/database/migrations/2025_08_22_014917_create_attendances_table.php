@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->dateTime('clock_out')->nullable();
             $table->text('note')->nullable();
             $table->string('status')->nullable();
-            $table->timestamp('timestamp')->nullable();
+            $table->datetime('recorded_at')->nullable();
             $table->timestamps();
         });
     }

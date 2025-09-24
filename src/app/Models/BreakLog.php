@@ -15,6 +15,11 @@ class BreakLog extends Model
         'end_time',
     ];
     
+    protected $casts = [
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
+    ];
+
     protected $dates = ['start_time', 'end_time'];
 
     public function attendance()

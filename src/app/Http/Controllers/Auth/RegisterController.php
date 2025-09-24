@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Auth\RegisterRequest;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -25,9 +26,11 @@ class RegisterController extends Controller
             'password' => Hash::make($request->input('password')),
         ]);
 
+        event(new Registered($user));
+
         Auth::login($user);
 
-        return redirect('/attendance')->with('flashSuccess', '登録が完了しました。');
+        return redirect('/email/verify')->with('flashSuccess', '登録が完了しました。認証メールを確認してください。');
     }
 
 }

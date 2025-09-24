@@ -1,0 +1,172 @@
+/* 全体背景・共通フォント */
+body {
+  background-color: #eee;
+  font-family: Arial, sans-serif;
+}
+
+/* 全体のコンテナ */
+.attendance-detail-container {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 40px;
+  background-color: #eee;
+  color: #333;
+}
+
+/* タイトル */
+.attendance-detail-container h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  border-left: 7px solid #000;
+  padding-left: 10px;
+  letter-spacing: 1px;
+}
+
+/* テーブル */
+.attendance-detail-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #fff;
+  border-radius: 6px;
+  margin-bottom: 30px;
+}
+
+.date-space {
+  display: inline-block;
+  width: 5em; /* または適当なpx */
+}
+
+.attendance-detail-container th,
+.attendance-detail-container td {
+  padding: 20px;
+  font-size: 16px;
+  vertical-align: middle;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.attendance-detail-container th {
+  color: #676767;
+  font-weight: bold;
+  width: 25%;
+  text-align: left;
+}
+
+.attendance-detail-container td {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* フォーム要素 */
+.attendance-detail-container input[type="time"],
+.attendance-detail-container textarea {
+  border: 1px solid #ccc;
+  padding: 8px 10px;
+  border-radius: 3px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.attendance-detail-container input[type="time"] {
+  width: 100px;
+}
+
+/* 時計マークを非表示にする */
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  pointer-events: none;
+}
+
+input[type="time"] {
+  appearance: textfield;
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+input[type="time"]::-moz-focus-inner {
+  border: 0;
+}
+
+.attendance-detail-container textarea {
+  width: 100%;
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* ボタン */
+.attendance-detail-container button {
+  display: block;
+  width: 150px;
+  padding: 12px 30px;
+  margin-left: auto;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.attendance-detail-container button:hover {
+  background-color: #333;
+}
+
+/* メッセージ表示 */
+.message {
+  padding: 10px;
+  margin-bottom: 1em;
+  border-radius: 5px;
+}
+
+.message.error ul li {
+  margin-bottom: 4px;   /* 各行に少し余白（任意） */
+  color: red;       /* Bootstrap風の赤（任意） */
+}
+
+.message.error ul {
+  list-style: none; /* リストの点（●）を消す */
+  padding-left: 0;  /* 左の余白も消したい場合 */
+  margin: 0;  
+}
+
+/* タブレット */
+@media screen and (max-width: 1399px) {
+  .attendance-detail-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+  }
+
+  .attendance-detail-container th,
+  .attendance-detail-container td {
+    padding: 15px;
+  }
+}
+
+/* スマートフォン */
+@media screen and (max-width: 767px) {
+  .attendance-detail-container {
+    margin: 20px 10px;
+    padding: 15px;
+  }
+
+  .attendance-detail-container h1 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .attendance-detail-container td {
+    display: block;
+    width: 100%;
+  }
+
+  .attendance-detail-container button {
+    font-size: 14px;
+  }
+}

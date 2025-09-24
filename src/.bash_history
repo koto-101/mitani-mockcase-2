@@ -58,3 +58,32 @@ php artisan route:list | grep attendances
 exit
 php artisan tinker
 exit
+php artisan make:seeder AttendancesTableSeeder
+php artisan make:seeder UsersTableSeeder
+php artisan migrate:fresh --seed
+php artisan migrate:fresh --seed
+php artisan migrate:fresh --seed
+php artisan migrate:fresh --seed
+php artisan migrate:fresh --seed
+exit
+composer require --dev laravel/dusk
+php artisan dusk:install
+exit
+cp .env .env.testing
+php artisan key:generate --env=testing
+php artisan config:clear
+php artisan migrate --env=testing
+php artisan make:test HelloTest
+exit
+vendor/bin/phpunit tests/Feature/HelloTest.php
+vendor/bin/phpunit tests/Feature/HelloTest.php
+vendor/bin/phpunit tests/Feature/HelloTest.php
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+vendor/bin/phpunit tests/Feature/HelloTest.php
+vendor/bin/phpunit tests/Feature/HelloTest.php
+vendor/bin/phpunit tests/Feature/HelloTest.php
+php artisan test --filter=UserRegistrationTest
+exit

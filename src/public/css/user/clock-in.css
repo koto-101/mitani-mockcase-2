@@ -1,0 +1,121 @@
+/* PC版のスタイル（1400px以上） */
+body {
+  background-color: #eee;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #000;
+}
+
+.attendance-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background-color: #eee;
+}
+
+.status {
+  font-size: 16px;
+  font-weight: bold;
+  color: #616060;
+  background-color: #ccccca;
+  border-radius: 20px;
+  padding: 5px 20px;
+  margin-bottom: 20px;
+}
+
+/* 日付のスタイル */
+.attendance-container .date {
+  font-size: 30px;
+  /* font-weight: bold; */
+  margin: 0 0 20px 0;
+}
+
+/* 時刻のスタイル */
+.attendance-container .time {
+  font-size: 64px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.attendance-container form {
+  display: flex;
+  gap: 20px;
+  margin-top: 50px;
+}
+
+.attendance-container button {
+  padding: 20px 60px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.attendance-container button.white-button {
+  background-color: #fff; 
+  color: #000;      
+}
+
+.attendance-container button.white-button:hover {
+  background-color: #f3f2f2;     
+}
+.attendance-container button:hover {
+  background-color: #333;
+}
+
+/* タブレット版のスタイル（768px - 1399px） */
+@media (max-width: 1399px) {
+  .attendance-container {
+    padding: 30px;
+  }
+  
+  .status {
+    font-size: 15px;
+  }
+
+  .attendance-container p {
+    font-size: 40px;
+  }
+
+  .attendance-container p:first-of-type {
+    font-size: 22px;
+  }
+  
+  .attendance-container button {
+    padding: 12px 40px;
+    font-size: 16px;
+  }
+}
+
+/* スマートフォン版のスタイル（767px以下） */
+@media (max-width: 767px) {
+  .attendance-container {
+    padding: 20px;
+  }
+
+  .status {
+    font-size: 14px;
+    padding: 4px 15px;
+  }
+
+  .attendance-container p {
+    font-size: 32px;
+  }
+
+  .attendance-container p:first-of-type {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+
+  .attendance-container button {
+    padding: 10px 30px;
+    font-size: 15px;
+  }
+}

@@ -3,7 +3,7 @@
 @section('title', '申請一覧')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/admin.request.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin/request-index.css') }}">
 @endsection
 
 @section('content')
@@ -33,7 +33,7 @@
                 <tr>
                     <td>{{ $request->status_label }}</td>
                     <td>{{ $request->user->name }}</td>
-                    <td>{{ \Carbon\Carbon::parse($request->attendance_date)->format('Y/m/d ') }}</td>
+                    <td>{{ $request->attendance ? \Carbon\Carbon::parse($request->attendance->date)->format('Y/m/d') : '-' }}</td>
                     <td>{{ $request->reason }}</td>
                     <td>{{ \Carbon\Carbon::parse($request->created_at)->format('Y/m/d ') }}</td>
                     <td>
