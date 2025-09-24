@@ -39,10 +39,13 @@
             <tr>
                 <th>出勤・退勤</th>
                 <td>
-                    <input type="time" name="clock_in" value="{{ old('clock_in', optional($attendance->clock_in)->format('H:i')) }}">
+                    <input type="time" name="clock_in"
+                           value="{{ old('clock_in', optional($attendance->clock_in)->format('H:i')) }}"
+                           {{ $hasPendingRequest ? 'readonly' : '' }}>
                     ～
-                    <input type="time" name="clock_out" value="{{ old('clock_out', optional($attendance->clock_out)->format('H:i')) }}">
-
+                    <input type="time" name="clock_out"
+                           value="{{ old('clock_out', optional($attendance->clock_out)->format('H:i')) }}"
+                           {{ $hasPendingRequest ? 'readonly' : '' }}>
                 </td>
             </tr>
 
@@ -70,9 +73,13 @@
                         {{ $i === 0 ? '休憩' : '休憩' . ($i + 1) }}
                     </th>
                     <td>
-                        <input type="time" name="breaks[{{ $i }}][start]" value="{{ old("breaks.$i.start", $startTime) }}">
+                        <input type="time" name="breaks[{{ $i }}][start]"
+                               value="{{ old("breaks.$i.start", $startTime) }}"
+                               {{ $hasPendingRequest ? 'readonly' : '' }}>
                         〜
-                        <input type="time" name="breaks[{{ $i }}][end]" value="{{ old("breaks.$i.end", $endTime) }}">
+                        <input type="time" name="breaks[{{ $i }}][end]"
+                               value="{{ old("breaks.$i.end", $endTime) }}"
+                               {{ $hasPendingRequest ? 'readonly' : '' }}>
                     </td>
                 </tr>
             @endfor
@@ -80,7 +87,7 @@
             <tr>
                 <th>備考</th>
                 <td>
-                    <textarea name="note" rows="3">{{ old('note', $attendance->note) }}</textarea>
+                    <textarea name="reason" rows="3" {{ $hasPendingRequest ? 'readonly' : '' }}>{{ old('reason', $attendance->note) }}</textarea>
                 </td>
             </tr>
         </table>

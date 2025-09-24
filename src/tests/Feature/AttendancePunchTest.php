@@ -59,7 +59,7 @@ class AttendancePunchTest extends TestCase
 
         $response = $this->actingAs($user)->get('/attendance');
         $response->assertStatus(200);
-        $response->assertDontSee('出勤');
+        $response->assertDontSee('<button type="submit" name="action" value="clock_in">出勤</button>', false);
     }
 
     /**
@@ -236,7 +236,7 @@ class AttendancePunchTest extends TestCase
         $response->assertSee($expectedBreakTime);
     }
 
-    public function testTaikinKinouTaikinButtonGaTadashikuKinouSuru()
+    public function testClockOutButtonFunctionsCorrectly()
     {
         $user = User::factory()->create();
 
@@ -266,7 +266,7 @@ class AttendancePunchTest extends TestCase
         $response->assertSee('退勤済');
     }
 
-    public function testTaikinJikokuGaKintaiIchiranGamenDeKakuninDekiru()
+    public function testCanConfirmClockOutTimeOnAttendanceListScreen()
     {
         $user = User::factory()->create();
 

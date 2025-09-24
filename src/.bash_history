@@ -87,3 +87,16 @@ vendor/bin/phpunit tests/Feature/HelloTest.php
 vendor/bin/phpunit tests/Feature/HelloTest.php
 php artisan test --filter=UserRegistrationTest
 exit
+php artisan test
+php artisan test
+php artisan test tests/Feature/AttendancePunchTest
+php artisan test tests/Feature/AttendancePunchTest.php
+php artisan test tests/Feature/AttendancePunchTest.php
+php artisan test tests/Feature/AttendancePunchTest.php
+php artisan test tests/Feature/AttendanceStatusTest.php
+php artisan test tests/Feature/AttendanceStatusTest.php
+php artisan test tests/Feature/AttendanceStatusTest.php
+php artisan test tests/Feature/AttendanceStatusTest.php
+php artisan test tests/Feature/AttendanceStatusTest.php
+php artisan test
+exit

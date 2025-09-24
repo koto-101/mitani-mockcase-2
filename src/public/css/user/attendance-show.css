@@ -56,6 +56,19 @@ body {
   box-sizing: border-box;
 }
 
+.attendance-detail-table input[type="time"][readonly],
+.attendance-detail-table textarea[readonly] {
+  border: none;
+  background-color: transparent;
+  cursor: default;
+}
+.attendance-detail-table input[type="time"][readonly]:focus,
+.attendance-detail-table textarea[readonly]:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
 /* 時計マークを非表示にする */
 
 input[type="time"]::-webkit-calendar-picker-indicator {
@@ -112,7 +125,6 @@ input[type="time"]::-moz-focus-inner {
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 .correction-button:hover {

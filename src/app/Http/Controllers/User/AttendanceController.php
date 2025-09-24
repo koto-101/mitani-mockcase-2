@@ -35,6 +35,7 @@ class AttendanceController extends Controller
         $statusLabel = match ($status) {
             'clock_in' => '出勤中',
             'break_in' => '休憩中',
+            'done'     => '退勤済',
             'clock_out' => '退勤済',
             default => '勤務外',
         };
