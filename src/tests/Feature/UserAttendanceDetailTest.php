@@ -21,12 +21,10 @@ class UserAttendanceDetailTest extends TestCase
     {
         parent::setUp();
 
-        // Create user
         $this->user = User::factory()->create([
             'name' => 'Test User',
         ]);
 
-        // Create attendance record for the user
         $this->date = Carbon::parse('2023-09-21');
         $this->attendance = Attendance::factory()->create([
             'user_id' => $this->user->id,
@@ -35,7 +33,6 @@ class UserAttendanceDetailTest extends TestCase
             'clock_out' => '18:00:00',
         ]);
 
-        // Create break time
         BreakLog::factory()->create([
             'attendance_id' => $this->attendance->id,
             'start_time' => '12:00:00',

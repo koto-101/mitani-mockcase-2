@@ -39,8 +39,8 @@ class AdminRequestListTest extends TestCase
         $attendance = Attendance::factory()->create([
             'user_id' => $user->id,
             'date' => '2025-09-23',
-            'clock_in' => $clockIn,
-            'clock_out' => $clockOut,
+            'clock_in' => '2025-09-23 09:00:00',
+            'clock_out' => '2025-09-23 18:00:00',
         ]);
 
         // 休憩ログを作成（必要な場合）
@@ -56,7 +56,7 @@ class AdminRequestListTest extends TestCase
             'attendance_id' => $attendance->id,
             'user_id' => $user->id,
             'status' => 'pending', // 承認待ち
-            'reason' => 'The clock-in time is incorrect.', // 理由
+            'reason' => 'The clock-in time is incorrect.',
         ]);
 
         // 管理者としてログインし、修正申請の詳細ページにアクセス
@@ -71,7 +71,7 @@ class AdminRequestListTest extends TestCase
         $response->assertSee('9月23日');
 
         // 出勤・退勤時刻が期待通りに表示されているか
-        $response->assertSee($clockIn->format('H:i') . ' ～ ' . $clockOut->format('H:i')); // 09:00 ～ 18:00
+        $response->assertSeeText('09:00 ～ 18:00');
 
         // 休憩時間の表示を確認（休憩ログが1件だけなので "休憩" で表示される）
         $response->assertSee('休憩');

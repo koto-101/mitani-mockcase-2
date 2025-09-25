@@ -16,9 +16,8 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login'); // ← ログアウト後に /login にリダイレクト
+        return redirect('/login');
     }
-
     
     public function login(LoginRequest $request)
     {
@@ -26,7 +25,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/attendance'); // 適宜リダイレクト先を変更
+            return redirect()->intended('/attendance'); 
         }
 
         return back()->withErrors([

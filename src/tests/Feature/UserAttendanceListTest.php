@@ -44,7 +44,7 @@ class UserAttendanceListTest extends TestCase
         // 出勤・退勤・休憩時間が表示されているか
         $response->assertSee('09:00');
         $response->assertSee('18:00');
-        $response->assertSee('1:00'); // 休憩時間（60分 → 1:00）
+        $response->assertSee('1:00');
 
         // 日付＋曜日表示の確認（例: 09/01（月））
         $date = Carbon::parse('2025-09-01');
@@ -73,7 +73,6 @@ class UserAttendanceListTest extends TestCase
         $currentMonth = $fixedNow->format('Y/m');
         $response->assertSee($currentMonth);
 
-        // テスト後に日時を戻すのを忘れずに
         Carbon::setTestNow();
     }
 
@@ -150,7 +149,7 @@ class UserAttendanceListTest extends TestCase
         $response->assertSee($nextMonth->format('m/d'). '（' . $weekday . '）');
         $response->assertDontSee($fixedNow->toDateString());
 
-        Carbon::setTestNow(); // 解除
+        Carbon::setTestNow();
     }
 
     /**
@@ -160,7 +159,6 @@ class UserAttendanceListTest extends TestCase
     {
         $user = User::factory()->create();
 
-        // 日時を固定
         $fixedNow = Carbon::parse('2025-09-21');
         Carbon::setTestNow($fixedNow);
 
@@ -184,7 +182,6 @@ class UserAttendanceListTest extends TestCase
         $response->assertSee($attendance->date->format('Y年'));
         $response->assertSee($attendance->date->format('n月j日'));
 
-        // 解除
         Carbon::setTestNow();
     }
 

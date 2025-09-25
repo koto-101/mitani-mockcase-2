@@ -63,7 +63,7 @@ class AttendanceController extends Controller
             case 'clock_in':
                 if (!$attendance->clock_in) {
                     $attendance->clock_in = now();
-                    $attendance->status = 'clock_in'; // 出勤中
+                    $attendance->status = 'clock_in';
                 }
                 break;
 
@@ -72,7 +72,7 @@ class AttendanceController extends Controller
                 $attendance->breakLogs()->create([
                     'start_time' => now(),
                 ]);
-                $attendance->status = 'break_in'; // ステータス更新
+                $attendance->status = 'break_in';
                 break;
 
             case 'break_out':
@@ -81,14 +81,14 @@ class AttendanceController extends Controller
                 if ($lastBreak) {
                     $lastBreak->update(['end_time' => now()]);
                 }
-                $attendance->status = 'clock_in'; // ステータス更新
+                $attendance->status = 'clock_in';
                 break;
 
 
             case 'clock_out':
                 if (!$attendance->clock_out) {
                     $attendance->clock_out = now();
-                    $attendance->status = 'clock_out'; // 退勤済
+                    $attendance->status = 'clock_out';
                 }
                 break;
         }
@@ -127,7 +127,7 @@ class AttendanceController extends Controller
     {
         $attendance = Attendance::with('breakLogs')->findOrFail($id);
 
-        // 本人の勤怠であることを確認（セキュリティ目的）
+        // 本人の勤怠であることを確認
         if ($attendance->user_id !== auth()->id()) {
             abort(403);
         }
@@ -200,7 +200,7 @@ class AttendanceController extends Controller
                     continue;
                 }
 
-                // どちらかが入っていれば null を代入（Carbon::parseに渡さないように）
+                // どちらかが入っていれば null を代入
                 $start = $break['start'] ?? null;
                 $end = $break['end'] ?? null;
 

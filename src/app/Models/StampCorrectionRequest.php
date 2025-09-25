@@ -28,10 +28,6 @@ class StampCorrectionRequest extends Model
     {
         return $this->belongsTo(Attendance::class);
     }
-    public function correctionRequest()
-    {
-        return $this->hasOne(StampCorrectionRequest::class);
-    }
 
     public function correctionBreakLogs()
     {

@@ -16,12 +16,10 @@ class AdminAttendanceDetailTest extends TestCase
     /**
      * 勤怠詳細ページが正しく表示されるか
      */
-
     public function testAttendanceDetailDisplaysSelectedAttendanceData()
     {
         $user = User::factory()->create();
         $admin = User::factory()->create(['is_admin' => true]);
-
 
         $attendance = Attendance::factory()->create([
             'user_id' => $user->id,
@@ -154,9 +152,6 @@ class AdminAttendanceDetailTest extends TestCase
 
     /**
      * 備考欄が未入力の場合のエラーメッセージが表示される
-     * 1. 管理者ユーザーにログインをする
-     * 2. 勤怠詳細ページを開く
-     * 3. 備考欄を未入力のまま保存処理をする
      */
     public function testErrorShownWhenNoteIsEmpty()
     {
@@ -178,7 +173,6 @@ class AdminAttendanceDetailTest extends TestCase
         ];
 
         $response = $this->actingAs($admin)->post(route('admin.attendance.requestCorrection', ['id' => $attendance->id]), $data);
-
         $response->assertSessionHasErrors(['reason' => '備考を記入してください']);
     }
 }

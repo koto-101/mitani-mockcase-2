@@ -20,7 +20,6 @@ class AdminAttendanceListTest extends TestCase
     {
         $admin = User::factory()->create(['is_admin' => true]);
 
-        // テスト用ユーザ＆勤怠作成
         $user = User::factory()->create();
         $attendance = Attendance::factory()->create([
             'user_id' => $user->id,
@@ -42,10 +41,10 @@ class AdminAttendanceListTest extends TestCase
 
         // 勤怠情報の表示確認（名前、時間表示）
         $response->assertSee($user->name);
-        $response->assertSee('09:00');      // clock_in
-        $response->assertSee('18:00');      // clock_out
-        $response->assertSee('1:00');       // total_break_time (gmdate('G:i', 3600) = '1:00')
-        $response->assertSee('8:00');       // working_time (gmdate('G:i', 28800) = '8:00')
+        $response->assertSee('09:00');
+        $response->assertSee('18:00');
+        $response->assertSee('1:00');
+        $response->assertSee('8:00');
     }
 
     /**
@@ -60,11 +59,9 @@ class AdminAttendanceListTest extends TestCase
 
         $response->assertStatus(200);
 
-        // ビューのh1で表示される日付(Y年n月j日)
         $expectedTitle = \Carbon\Carbon::parse($date)->format('Y年n月j日');
         $response->assertSee($expectedTitle);
 
-        // ナビの真ん中の日付(絵文字含む)
         $expectedNavDate = '📅' . \Carbon\Carbon::parse($date)->format('Y/m/d');
         $response->assertSee($expectedNavDate);
     }

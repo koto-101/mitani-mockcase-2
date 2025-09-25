@@ -43,7 +43,7 @@ class EmailVerificationTest extends TestCase
         $response = $this->actingAs($user)->get('/email/verify');
 
         $response->assertStatus(200);
-        $response->assertSee('認証はこちらから'); // ボタンテキストなどで調整可能
+        $response->assertSee('認証はこちらから');
     }
 
     /**
@@ -68,7 +68,7 @@ class EmailVerificationTest extends TestCase
         Event::assertDispatched(Verified::class);
         $this->assertTrue($user->fresh()->hasVerifiedEmail());
 
-        // 勤怠登録画面（例：/attendance/punch）へのリダイレクトを想定
+        // 勤怠登録画面へのリダイレクト
         $response->assertRedirect('/attendance');
     }
 }

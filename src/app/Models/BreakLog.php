@@ -20,8 +20,6 @@ class BreakLog extends Model
         'end_time' => 'datetime',
     ];
 
-    protected $dates = ['start_time', 'end_time'];
-
     public function attendance()
     {
         return $this->belongsTo(Attendance::class);
@@ -29,6 +27,13 @@ class BreakLog extends Model
 
     public function user()
     {
-        return $this->hasOneThrough(User::class, Attendance::class);
+        return $this->hasOneThrough(
+            User::class,
+            Attendance::class,
+            'user_id',
+            'id',
+            'attendance_id',
+            'id' 
+        );
     }
 }

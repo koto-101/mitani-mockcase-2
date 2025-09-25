@@ -164,12 +164,12 @@ input[type="time"]::-moz-focus-inner {
 
   .attendance-detail-table th,
   .attendance-detail-table td {
-    display: table-cell; /* ← 横並びに戻す */
-    width: auto;         /* ← 幅を元に戻す */
+    display: table-cell;
+    width: auto;
   }
 
   .attendance-detail-table tr {
-    display: table-row;  /* ← 行として扱う */
+    display: table-row;
   }
 
   .attendance-detail-table th {

@@ -3,11 +3,9 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Carbon\Carbon;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 class DateTimeDisplayTest extends TestCase
 {
@@ -23,19 +21,19 @@ class DateTimeDisplayTest extends TestCase
         $response = $this->actingAs($user)->get('/attendance');
 
         // Carbon を日本語ローカライズ
-        \Carbon\Carbon::setLocale('ja_JP.UTF-8'); // Linux 環境で必要なことがある
+        Carbon::setLocale('ja_JP.UTF-8');
 
-        $now = \Carbon\Carbon::now();
+        $now = Carbon::now();
 
-        $expectedDate = $now->format('Y年n月j日'); // 例: 2025年9月21日
-        $expectedWeekday = $now->isoFormat('dd'); // 例: 日
+        $expectedDate = $now->format('Y年n月j日'); 
+        $expectedWeekday = $now->isoFormat('dd'); 
 
-        $expectedTime = $now->format('H:i'); // 例: 15:05
+        $expectedTime = $now->format('H:i');
 
         // アサーション
         $response->assertStatus(200);
         $response->assertSee($expectedDate);
-        $response->assertSee("（{$expectedWeekday}）"); // 曜日カッコ付き
+        $response->assertSee("（{$expectedWeekday}）");
         $response->assertSee($expectedTime);
     }
 }

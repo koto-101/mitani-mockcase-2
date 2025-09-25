@@ -38,7 +38,7 @@ class AdminUserListTest extends TestCase
     }
 
     /**
-     * 2.ユーザーの勤怠情報が正しく表示される
+     * ユーザーの勤怠情報が正しく表示される
      */
     public function testUserAttendanceListIsDisplayedCorrectly()
     {
@@ -84,7 +84,7 @@ class AdminUserListTest extends TestCase
         $user = User::factory()->create(['is_admin' => false]);
 
         // 今月の勤怠（表示されないはず）
-        $attendance =Attendance::factory()->create([
+        $attendance = Attendance::factory()->create([
             'user_id' => $user->id,
             'date' => '2025-09-15',
             'clock_in' => '10:00',
@@ -92,7 +92,7 @@ class AdminUserListTest extends TestCase
         ]);
 
         // 前月の勤怠（表示されるはず）
-        $attendance =Attendance::factory()->create([
+        $attendance = Attendance::factory()->create([
             'user_id' => $user->id,
             'date' => '2025-08-20',
             'clock_in' => '09:00',
@@ -129,7 +129,7 @@ class AdminUserListTest extends TestCase
         $user = User::factory()->create(['is_admin' => false]);
 
         // 今月の勤怠（表示されないはず）
-        $attendance =Attendance::factory()->create([
+        $attendance = Attendance::factory()->create([
             'user_id' => $user->id,
             'date' => '2025-09-15',
             'clock_in' => '2025-09-15 10:00:00',
@@ -137,7 +137,7 @@ class AdminUserListTest extends TestCase
         ]);
 
         // 翌月の勤怠（表示されるはず）
-        $attendance =Attendance::factory()->create([
+        $attendance = Attendance::factory()->create([
             'user_id' => $user->id,
             'date' => '2025-10-10',
             'clock_in' => '2025-10-10 09:00:00',

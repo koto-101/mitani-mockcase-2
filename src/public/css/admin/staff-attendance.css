@@ -114,7 +114,6 @@ table td a:hover {
 }
 
 /* === レスポンシブ対応 === */
-
 /* 中サイズデバイス（タブレットなど） */
 @media (max-width: 1024px) {
   .container {

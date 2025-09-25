@@ -217,11 +217,11 @@ class AttendancePunchTest extends TestCase
 
         $break1 = $attendance->breakLogs()->create([
             'start_time' => now()->setTime(12, 0),
-            'end_time' => now()->setTime(12, 30), // 30分
+            'end_time' => now()->setTime(12, 30),
         ]);
         $break2 = $attendance->breakLogs()->create([
             'start_time' => now()->setTime(15, 0),
-            'end_time' => now()->setTime(15, 15), // 15分
+            'end_time' => now()->setTime(15, 15),
         ]);
 
         $response = $this->get('/attendance/list');
@@ -230,7 +230,7 @@ class AttendancePunchTest extends TestCase
 
         // 合計休憩時間は45分 (30 + 15)
         $totalBreakMinutes = 30 + 15;
-        $expectedBreakTime = minutesToTime($totalBreakMinutes); // 0:45
+        $expectedBreakTime = minutesToTime($totalBreakMinutes);
 
         // 個別の休憩時刻ではなく、合計休憩時間が表示されていることを確認
         $response->assertSee($expectedBreakTime);

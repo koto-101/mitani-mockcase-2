@@ -30,7 +30,6 @@ body {
 /* 日付のスタイル */
 .attendance-container .date {
   font-size: 30px;
-  /* font-weight: bold; */
   margin: 0 0 20px 0;
 }
 

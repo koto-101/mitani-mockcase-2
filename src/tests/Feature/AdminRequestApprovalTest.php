@@ -18,7 +18,6 @@ class AdminRequestApprovalTest extends TestCase
     {
         parent::setUp();
 
-        // 管理者ユーザーを作成
         $this->admin = User::factory()->create(['is_admin' => true]);
     }
 
@@ -27,7 +26,6 @@ class AdminRequestApprovalTest extends TestCase
      */
     public function testPendingRequestsAreDisplayed()
     {
-        // ユーザーを複数作成
         $users = User::factory()->count(3)->create();
 
         // 各ユーザーに対して出勤記録を作成

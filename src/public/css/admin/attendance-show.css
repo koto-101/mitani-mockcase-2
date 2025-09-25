@@ -35,7 +35,7 @@ body {
 
 .date-space {
   display: inline-block;
-  width: 5em; /* または適当なpx */
+  width: 5em;
 }
 
 .attendance-detail-container th,
@@ -43,7 +43,7 @@ body {
   padding: 20px;
   font-size: 16px;
   vertical-align: middle;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #eee;
 }
 
 .attendance-detail-container th {
@@ -75,7 +75,6 @@ body {
 }
 
 /* 時計マークを非表示にする */
-
 input[type="time"]::-webkit-calendar-picker-indicator {
   opacity: 0;
   pointer-events: none;
@@ -125,13 +124,13 @@ input[type="time"]::-moz-focus-inner {
 }
 
 .message.error ul li {
-  margin-bottom: 4px;   /* 各行に少し余白（任意） */
-  color: red;       /* Bootstrap風の赤（任意） */
+  margin-bottom: 4px;  
+  color: red;
 }
 
 .message.error ul {
-  list-style: none; /* リストの点（●）を消す */
-  padding-left: 0;  /* 左の余白も消したい場合 */
+  list-style: none;
+  padding-left: 0; 
   margin: 0;  
 }
 
