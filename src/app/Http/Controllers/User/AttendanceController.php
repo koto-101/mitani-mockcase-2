@@ -27,7 +27,7 @@ class AttendanceController extends Controller
         // ステータスが null の場合は off（勤務外）
         $status = $attendance->status ?? 'off';
 
-        if (in_array($status, ['clock_out'])) {
+        if (in_array($status, ['clock_out', 'approved'])) {
             $status = 'done';
         }
 
@@ -190,6 +190,9 @@ class AttendanceController extends Controller
                 'clock_out'     => $request->input('clock_out'),
                 'requested_at'  => now(),
             ]);
+
+                $attendance->status = 'pending';
+                $attendance->save();
 
 
             foreach ($request->input('breaks', []) as $break) {

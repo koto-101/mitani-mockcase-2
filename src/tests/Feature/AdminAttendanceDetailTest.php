@@ -79,7 +79,7 @@ class AdminAttendanceDetailTest extends TestCase
 
         $response = $this->actingAs($admin)->post(route('admin.attendance.requestCorrection', ['id' => $attendance->id]), $data);
 
-        $response->assertSessionHasErrors(['clock_in' => '出勤時間もしくは退勤時間が不適切な値です']);
+        $response->assertSessionHasErrors(['clock_in' => '出勤時間が不適切な値です']);
     }
 
     /**

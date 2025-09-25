@@ -3,14 +3,12 @@
 @section('title', '会員登録')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/user/register.css') }}"> {{-- 任意 --}}
+    <link rel="stylesheet" href="{{ asset('css/user/register.css') }}">
 @endsection
 
 @section('content')
 <div class="auth-container">
     <h1 class="auth-title">会員登録</h1>
-
-    {{-- 登録フォーム --}}
     <form method="POST" action="{{ route('register') }}" class="auth-form">
         @csrf
 
@@ -20,7 +18,7 @@
         </div>
         <div class="form__error">
             @error('name')
-            {{ $message }}
+                {{ $message }}
             @enderror
         </div>
 
@@ -30,7 +28,7 @@
         </div>
         <div class="form__error">
             @error('email')
-            {{ $message }}
+                {{ $message }}
             @enderror
         </div>
 
@@ -40,7 +38,7 @@
         </div>
         <div class="form__error">
             @error('password')
-            {{ $message }}
+                {{ $message }}
             @enderror
         </div>
 

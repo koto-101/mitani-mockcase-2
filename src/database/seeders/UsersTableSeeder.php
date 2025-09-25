@@ -21,6 +21,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'user1@example.com',
             'password' => Hash::make('user1234'),
             'is_admin' => false,
+            'email_verified_at' => now(),
         ]);
 
         User::create([
@@ -28,6 +29,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'user2@example.com',
             'password' => Hash::make('user1234'),
             'is_admin' => false,
+            'email_verified_at' => now(),
         ]);
 
         // 管理者ユーザー

@@ -10,7 +10,7 @@ class LoginController extends Controller
 {
     public function showLoginForm()
     {
-        return view('admin.login'); // resources/views/admin/login.blade.php
+        return view('admin.login'); 
     }
 
     public function login(AdminLoginRequest $request)

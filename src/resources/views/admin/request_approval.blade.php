@@ -33,7 +33,6 @@
                     </td>
                 </tr>
 
-            {{-- 実際の休憩ログ表示 --}}
             @php
                 $breakLogs = $request->correctionBreakLogs->isNotEmpty()
                     ? $request->correctionBreakLogs
@@ -66,7 +65,6 @@
         </tbody>
     </table>
 
-    {{-- 承認ボタン --}}
 @if ($request->status !== 'approved')
     <form action="{{ route('requests.approve', ['id' => $request->id]) }}" method="POST" >
         @csrf

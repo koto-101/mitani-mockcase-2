@@ -4,6 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Validator;
+use Carbon\Carbon;
 
 class AttendanceCorrectionRequest extends FormRequest
 {
@@ -25,8 +26,14 @@ class AttendanceCorrectionRequest extends FormRequest
     {
         return [
             'clock_in.required' => '出勤時間を入力してください',
+            'clock_in.date_format' => '出勤時間の形式が正しくありません',
             'clock_out.required' => '退勤時間を入力してください',
+            'clock_out.date_format' => '退勤時間の形式が正しくありません',
             'reason.required' => '備考を記入してください',
+            'reason.string' => '備考は文字列で入力してください',
+            'reason.max' => '備考は255文字以内で入力してください',
+            'breaks.*.start.date_format' => '休憩開始時間の形式が正しくありません',
+            'breaks.*.end.date_format' => '休憩終了時間の形式が正しくありません',
         ];
     }
 
@@ -35,34 +42,31 @@ class AttendanceCorrectionRequest extends FormRequest
         $validator->after(function ($validator) {
             $clockIn = $this->input('clock_in');
             $clockOut = $this->input('clock_out');
-            $breaks = $this->input('breaks', []);
 
-            // 出勤・退勤時間の前後チェック
-            if ($clockIn && $clockOut && $clockIn > $clockOut) {
-                $validator->errors()->add('clock_in', '出勤時間もしくは退勤時間が不適切な値です');
+            // 出勤 > 退勤
+            if ($clockIn && $clockOut && Carbon::parse($clockIn)->gt(Carbon::parse($clockOut))) {
+                $validator->errors()->add('clock_in', '出勤時間が不適切な値です');
             }
 
+            $breaks = $this->input('breaks', []);
             foreach ($breaks as $index => $break) {
                 $start = $break['start'] ?? null;
                 $end = $break['end'] ?? null;
 
-                // 休憩開始が出勤前 or 退勤後
-                if ($start && $clockIn && $start < $clockIn) {
+                if ($start && $clockIn && Carbon::parse($start)->lt(Carbon::parse($clockIn))) {
                     $validator->errors()->add("breaks.$index.start", '休憩時間が不適切な値です');
                 }
 
-                if ($start && $clockOut && $start > $clockOut) {
+                if ($start && $clockOut && Carbon::parse($start)->gt(Carbon::parse($clockOut))) {
                     $validator->errors()->add("breaks.$index.start", '休憩時間が不適切な値です');
                 }
 
-                // 休憩終了が退勤後
-                if ($end && $clockOut && $end > $clockOut) {
+                if ($end && $clockOut && Carbon::parse($end)->gt(Carbon::parse($clockOut))) {
                     $validator->errors()->add("breaks.$index.end", '休憩時間もしくは退勤時間が不適切な値です');
                 }
 
-                // 休憩終了が開始より前
-                if ($start && $end && $end < $start) {
-                    $validator->errors()->add("breaks.$index.end", '休憩終了時間が開始時間より前です');
+                if ($start && $end && Carbon::parse($end)->lt(Carbon::parse($start))) {
+                    $validator->errors()->add("breaks.$index.end", '休憩時間もしくは退勤時間が不適切な値です');
                 }
             }
         });

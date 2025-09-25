@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\StampCorrectionRequest;
-use App\Models\User;
+use Carbon\Carbon;
+
 
 class RequestController extends Controller
 {
     public function index(Request $request)
     {
-        $status = $request->query('status', 'pending'); // デフォルトは承認待ち
+        $status = $request->query('status', 'pending');
 
         $requests = StampCorrectionRequest::with(['user', 'attendance'])
             ->when($status === 'pending', fn ($q) => $q->where('status', 'pending'))
@@ -19,7 +20,6 @@ class RequestController extends Controller
             ->orderByDesc('created_at')
             ->get();
 
-        // 状態ラベル（例: 承認待ち／承認済）を整形
         $requests->each(function ($request) {
             $request->status_label = match ($request->status) {
                 'pending' => '承認待ち',
@@ -38,17 +38,15 @@ class RequestController extends Controller
     {
         $request = StampCorrectionRequest::with(['user', 'attendance', 'correctionBreakLogs'])->findOrFail($id);
 
-        // 休憩時間合計（秒）を計算
         $totalBreakSeconds = 0;
         foreach ($request->correctionBreakLogs as $break) {
             if ($break->start_time && $break->end_time) {
-                $start = strtotime($break->start_time);
-                $end = strtotime($break->end_time);
-                $totalBreakSeconds += max(0, $end - $start);
+                $start = Carbon::parse($break->start_time);
+                $end = Carbon::parse($break->end_time);
+                $totalBreakSeconds += $end->diffInSeconds($start);
             }
         }
 
-        // Blade に渡すため、モデルに動的プロパティとして追加
         $request->requested_break_time = $totalBreakSeconds;
 
         return view('admin.request_approval', compact('request'));
@@ -59,13 +57,12 @@ class RequestController extends Controller
     {
         $correctionRequest = StampCorrectionRequest::with('attendance')->findOrFail($id);
 
-        // 勤怠情報を更新
         $attendance = $correctionRequest->attendance;
         $attendance->clock_in = $correctionRequest->clock_in;
         $attendance->clock_out = $correctionRequest->clock_out;
+        $attendance->status = 'approved';
         $attendance->save();
         $attendance->breakLogs()->delete(); 
-
         foreach ($correctionRequest->correctionBreakLogs as $correctionBreak) {
             if ($correctionBreak->start_time && $correctionBreak->end_time) {
                 $attendance->breakLogs()->create([

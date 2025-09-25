@@ -100,3 +100,18 @@ php artisan test tests/Feature/AttendanceStatusTest.php
 php artisan test tests/Feature/AttendanceStatusTest.php
 php artisan test
 exit
+php artisan test
+php artisan test
+php artisan test
+php artisan test
+php artisan test
+exit
+php artisan test
+php artisan test
+php artisan test
+php artisan test
+php artisan test
+php artisan test
+php artisan test
+php artisan test
+exit

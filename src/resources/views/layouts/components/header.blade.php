@@ -3,7 +3,6 @@
     $routeName = Route::currentRouteName();
     $isAdmin = request()->is('admin/*');
     $isSpecialAttendanceView = !$isAdmin && ($routeName === 'attendance') && ($status === 'done');
-    //$isSpecialAttendanceView = false;
 @endphp
 
 <header class="header">
@@ -34,7 +33,6 @@
                             <li><a href="/stamp_correction_request/list">申請</a></li>
                         @endif
 
-                        {{-- ログアウトは条件なしで必ず表示 --}}
                         <li>
                             <form action="{{ $isAdmin ? url('/admin/logout') : url('/logout') }}" method="POST" style="display:inline;">
                                 @csrf

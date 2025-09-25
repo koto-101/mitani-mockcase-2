@@ -51,7 +51,7 @@ MAIL_FROM_ADDRESS=no-reply@example.com
 ``` bash
 php artisan key:generate
 ```
-7. 設定キャッシュ（.env変更時は都度推奨） 
+7. 設定キャッシュ（環境変数変更時は都度推奨） 
 ``` bash 
 php artisan config:cache
 ```
@@ -142,10 +142,15 @@ php artisan db:seed
 ## ER図
 ![ER図](./er.png)
 
-## URL
-- 開発環境：http://localhost
-- phpMyAdmin：http://localhost:8080
-- Mailhog（メール確認）: http://localhost:8025
+## URL一覧
+
+### ログイン画面
+- 一般ユーザー用：<http://localhost/login>
+- 管理者ユーザー用：<http://localhost/admin/login>
+
+### 開発用ツール
+- phpMyAdmin（DB確認）：<http://localhost:8080>
+- Mailhog（メール確認）：<http://localhost:8025>
 
 ## 使用技術(実行環境)
 - **OS**: Windows 11
@@ -158,24 +163,14 @@ php artisan db:seed
 - **開発補助**:
   - Docker / Docker Compose
 
-## テストアカウント
-name: 一般1
-email: user1@example.com
-password: user1234
--------------------------
-name: 一般2
-email: user2@example.com
-password: user1234
--------------------------
-name: 管理者1
-email: admin1@example.com  
-password: admin1234  
--------------------------
-name: 管理者2
-email: admin2@example.com  
-password: admin1234  
--------------------------
+## テストアカウント一覧
 
+| 名前     | メールアドレス         | パスワード   |
+|----------|------------------------|--------------|
+| 一般1    | user1@example.com      | user1234     |
+| 一般2    | user2@example.com      | user1234     |
+| 管理者1  | admin1@example.com     | admin1234    |
+| 管理者2  | admin2@example.com     | admin1234    |
 
 
 ## テストについて
@@ -198,12 +193,7 @@ cp .env .env.testing
 ```
 4. .env.testing に以下のDB設定を記述
 ``` text
-DB_CONNECTION=mysql
-DB_HOST=mysql
-DB_PORT=3306
 DB_DATABASE=demo_test
-DB_USERNAME=laravel_user
-DB_PASSWORD=laravel_pass
 ```
 4. テスト用マイグレーションを実行
 ```bash

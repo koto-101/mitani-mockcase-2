@@ -12,7 +12,6 @@
     <h1>{{ $currentDate->format('Y年n月j日') }}の勤怠</h1>
     </div>
 
-    {{-- 日付と前日・翌日リンク --}}
     <div class="date-navigation">
         <a href="{{ route('admin.attendance.index', ['date' => $prevDate]) }}">← 前日</a>
         <strong>{{ $currentDate->format('📅Y/m/d') }}</strong>

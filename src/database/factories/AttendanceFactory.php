@@ -18,7 +18,7 @@ class AttendanceFactory extends Factory
             'clock_in' => null,
             'clock_out' => null,
             'note' => $this->faker->optional()->sentence(),
-            'status' => '勤務外',
+            'status' => 'off',
             'recorded_at' => now(),
             'created_at' => now(),
             'updated_at' => now(),

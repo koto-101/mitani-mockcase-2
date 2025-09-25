@@ -17,7 +17,7 @@ class AttendancesTableSeeder extends Seeder
     {
         $userIds = [1, 2];
         $startDate = Carbon::today()->subMonthsNoOverflow(3);
-        $endDate = Carbon::today();
+        $endDate = Carbon::yesterday();
                 
         foreach ($userIds as $userId) {
             $date = $startDate->copy();

@@ -9,7 +9,6 @@ use App\Models\User;
 use Carbon\Carbon;
 use App\Http\Requests\Admin\AttendanceCorrectionRequest;
 use App\Models\StampCorrectionRequest as CorrectionRequest;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AttendanceController extends Controller
@@ -38,7 +37,7 @@ class AttendanceController extends Controller
         $correctionRequest = $attendance->stampcorrectionRequests()
             ->where('status', 'pending')
             ->latest()
-            ->first(); // または ->where('status', 'pending')->first();
+            ->first();
 
         $correctionBreakLogs = $correctionRequest ? $correctionRequest->correctionBreakLogs : collect();
 
@@ -83,22 +82,13 @@ class AttendanceController extends Controller
 
     public function staff($id, Request $request)
     {
-        // 対象ユーザーを取得
         $user = User::findOrFail($id);
-
-        // 表示対象の月を取得（クエリパラメータから、なければ今月）
         $month = $request->input('month');
         $currentMonth = $month ? Carbon::parse($month) : Carbon::now()->startOfMonth();
-
-        // 前月・翌月
         $prevMonth = $currentMonth->copy()->subMonth();
         $nextMonth = $currentMonth->copy()->addMonth();
-
-        // 月初と月末の日付
         $startDate = $currentMonth->copy()->startOfMonth();
         $endDate = $currentMonth->copy()->endOfMonth();
-
-        // 勤怠データをその月分取得（date をキーに）
         $attendanceMap = Attendance::where('user_id', $user->id)
             ->whereBetween('date', [$startDate->toDateString(), $endDate->toDateString()])
             ->orderBy('date')
@@ -107,7 +97,6 @@ class AttendanceController extends Controller
                 return Carbon::parse($attendance->date)->format('Y-m-d');
             });
 
-        // 表示用：1か月分の日付リストを作成し、出勤データを紐づける
         $attendanceList = collect();
         for ($date = $startDate->copy(); $date->lte($endDate); $date->addDay()) {
             $dateStr = $date->toDateString();
@@ -119,7 +108,7 @@ class AttendanceController extends Controller
 
         return view('admin.staff_attendance', [
             'user'           => $user,
-            'attendanceList' => $attendanceList, // ← 新しく渡す
+            'attendanceList' => $attendanceList,
             'currentMonth'   => $currentMonth,
             'prevMonth'      => $prevMonth,
             'nextMonth'      => $nextMonth,

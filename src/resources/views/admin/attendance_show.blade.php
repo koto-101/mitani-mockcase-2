@@ -56,11 +56,10 @@
             </tr>
 
             @php
-                // 修正申請の休憩ログが存在するか？
                 $breakLogs = ($correctionRequest && $correctionRequest->correctionBreakLogs->isNotEmpty())
                     ? $correctionRequest->correctionBreakLogs
                     : $attendance->breakLogs;
-
+                    
                 $breakCount = $breakLogs->count();
                 $showCount = $breakCount + 1;
             @endphp
