@@ -196,8 +196,7 @@ FLUSH PRIVILEGES;
 ```bash
 cp .env .env.testing
 ```
-4. .env.testing に以下のDB、メール設定を記述
-#### データベース設定
+4. .env.testing に以下のDB設定を記述
 ``` text
 DB_CONNECTION=mysql
 DB_HOST=mysql
@@ -205,7 +204,6 @@ DB_PORT=3306
 DB_DATABASE=demo_test
 DB_USERNAME=laravel_user
 DB_PASSWORD=laravel_pass
-
 ```
 4. テスト用マイグレーションを実行
 ```bash

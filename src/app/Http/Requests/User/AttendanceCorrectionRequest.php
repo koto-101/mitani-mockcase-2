@@ -16,9 +16,9 @@ class AttendanceCorrectionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'clock_in' => 'required|date_format:H:i',
-            'clock_out' => 'required|date_format:H:i',
-            'reason' => 'required|string|max:255',
+            'clock_in' => ['required', 'date_format:H:i'],
+            'clock_out' => ['required', 'date_format:H:i'],
+            'reason' => ['required', 'string', 'max:255'],
         ];
     }
 
