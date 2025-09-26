@@ -97,7 +97,7 @@ input[type="time"]::-moz-focus-inner {
 
 .date-space {
   display: inline-block;
-  width: 5em; /* または適当なpx */
+  width: 5em; 
 }
 
 .alert-danger ul {

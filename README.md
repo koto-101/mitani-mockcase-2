@@ -172,7 +172,6 @@ php artisan db:seed
 | 管理者1  | admin1@example.com     | admin1234    |
 | 管理者2  | admin2@example.com     | admin1234    |
 
-
 ## テストについて
 1. テスト用データベースの作成
 ```bash
@@ -195,16 +194,22 @@ cp .env .env.testing
 ``` text
 DB_DATABASE=demo_test
 ```
-4. テスト用マイグレーションを実行
+5. テスト用マイグレーションを実行
 ```bash
 docker-compose exec php bash
 php artisan migrate:fresh --env=testing
 ```
-5. テストの実行
+6. テストの実行
 ```bash
 php artisan test
 ```
-
+## キャッシュのクリア
+手順通りに実行していただいてもphpMyAdminでDBやテーブルの確認ができないことがあります。
+Laravelは設定や環境変数をキャッシュすることがありますので、以下のコマンドを実行してキャッシュをクリアし、再度マイグレーションを試してみてください。
+```bash
+php artisan cache:clear
+php artisan config:clear
+```
 ## 仕様の不明点について
 以前、コーチを通して不明点を質問させていただきましたが、回答に時間がかかっていたため、コーチに確認の上、こちらの判断で実装させていただいております。
 以下、質問と、それに対する実装点をまとめましたのでご確認いただきますようお願いいたします。

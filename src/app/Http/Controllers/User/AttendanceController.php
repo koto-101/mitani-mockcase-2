@@ -192,6 +192,7 @@ class AttendanceController extends Controller
             ]);
 
                 $attendance->status = 'pending';
+                $attendance->note = $request->input('reason');
                 $attendance->save();
 
 
@@ -215,6 +216,4 @@ class AttendanceController extends Controller
         return redirect()->route('attendance.detail', $attendance->id)
                         ->with('success', '修正申請を送信しました。');
     }
-
-
 }
