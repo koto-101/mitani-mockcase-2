@@ -24,18 +24,21 @@ class AttendanceController extends Controller
             ->latest()
             ->first();
 
-        // ステータスが null の場合は off（勤務外）
+        // ステータスが null の場合は 'off'（勤務外）
         $status = $attendance->status ?? 'off';
 
-        if (in_array($status, ['clock_out', 'approved'])) {
-            $status = 'done';
+        // 承認待ち、承認済みはどちらも 'done' に設定
+        if (in_array($status, ['pending', 'approved'])) {
+            $status = 'done';  // 承認待ち・承認済みは 'done' として扱う
+        } elseif ($status === 'clock_out') {
+            $status = 'done';  // 退勤している場合も 'done' として扱う
         }
 
         // ステータス表示用ラベル
         $statusLabel = match ($status) {
             'clock_in' => '出勤中',
             'break_in' => '休憩中',
-            'done'     => '退勤済',
+            'done'     => '退勤済',  // 'done' は退勤済みとして表示
             'clock_out' => '退勤済',
             default => '勤務外',
         };
